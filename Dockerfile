@@ -1,52 +1,78 @@
 FROM anapsix/alpine-java:8_jdk
-LABEL maintainer "IISUE <sklee@iisue.com>"
+LABEL maintainer="Shreejan Shrestha <shr3jn@gmail.com>"
 
-ARG VCS_REF
-LABEL org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.vcs-url="e.g. https://github.com/microscaling/microscaling"
-
-ENV LANG "en_US.UTF-8"
-ENV LANGUAGE "en_US.UTF-8"
 ENV LC_ALL "en_US.UTF-8"
+ENV LANGUAGE "en_US.UTF-8"
+ENV LANG "en_US.UTF-8"
 
-ENV ANDROID_HOME "/android-sdk"
-ENV ANDROID_COMPILE_SDK "28"
-ENV ANDROID_BUILD_TOOLS "28.0.0"
-ENV ANDROID_SDK_TOOLS "3859397"
-ENV PATH "$PATH:${ANDROID_HOME}/platform-tools"
+ENV VERSION_SDK_TOOLS "3859397"
+ENV VERSION_BUILD_TOOLS "28.0.3"
+ENV VERSION_TARGET_SDK "28"
 
-RUN apk update && \
-    apk add --no-cache \
-        git \
-        bash \
-        curl \
-        wget \
-        zip \
-        unzip \
-        ruby \
-        ruby-rdoc \
-        ruby-irb \
-        ruby-dev \
-        openssh \
-        g++ \
-        make \
+ENV ANDROID_HOME "/sdk"
+
+ENV PATH "$PATH:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools"
+ENV DEBIAN_FRONTEND noninteractive
+
+ENV HOME "/root"
+
+RUN apk update && apk add --no-cache \
+    bash \
+    perl \
+    curl \
+    unzip \
+    zip \
+    git \
+    ruby \
+    ruby-dev \
+    ruby-rdoc \
+    ruby-irb \
+    openssh \
+    openssh-server \
+    g++ \
+    make \
+    cmake \
+    ninja \
+    nodejs \
+    nodejs-npm \
+    python \
     && rm -rf /tmp/* /var/tmp/*
 
-RUN apk --no-cache add ca-certificates wget
-RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
-RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.26-r0/glibc-2.26-r0.apk
-RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.26-r0/glibc-bin-2.26-r0.apk
-RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.26-r0/glibc-i18n-2.26-r0.apk
+ADD https://dl.google.com/android/repository/sdk-tools-linux-${VERSION_SDK_TOOLS}.zip /tools.zip
+RUN unzip /tools.zip -d /sdk && \
+    rm -v /tools.zip
 
-RUN apk add glibc-2.26-r0.apk
-RUN apk add glibc-bin-2.26-r0.apk
-RUN apk add glibc-i18n-2.26-r0.apk
-RUN /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8
+RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager --licenses
+RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-${VERSION_TARGET_SDK}"
 
-RUN gem install fastlane -v 2.115.0
+RUN mkdir -p $HOME/.android && touch $HOME/.android/repositories.cfg
+RUN ${ANDROID_HOME}/tools/bin/sdkmanager "tools" "build-tools;${VERSION_BUILD_TOOLS}"
+RUN ${ANDROID_HOME}/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;google_play_services" "extras;google;m2repository"
+RUN ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle"
 
-ADD https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_TOOLS}.zip sdk-tools-linux.zip
+RUN mkdir -p $HOME/lokalise && cd $HOME/lokalise
+RUN wget -O ./inst.tgz https://s3-eu-west-1.amazonaws.com/lokalise-assets/cli/lokalise-0.44-linux-amd64.tgz
+RUN tar -xvzf ./inst.tgz
+RUN mv ./lokalise /usr/local/bin/lokalise
 
-RUN unzip sdk-tools-linux.zip -d ${ANDROID_HOME} && \
-    rm sdk-tools-linux.zip && \
-    echo y | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}" "build-tools;${ANDROID_BUILD_TOOLS}"
+RUN gem install fastlane
+RUN gem install dotenv
+RUN gem install json
+
+# Downloading gcloud package
+RUN curl https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > /tmp/google-cloud-sdk.tar.gz
+
+# Installing the package
+RUN mkdir -p /usr/local/gcloud
+RUN tar -C /usr/local/gcloud -xvf /tmp/google-cloud-sdk.tar.gz
+RUN /usr/local/gcloud/google-cloud-sdk/install.sh --quiet
+
+# Adding the package path to local
+ENV PATH $PATH:/usr/local/gcloud/google-cloud-sdk/bin
+
+RUN npm install -g webpack webpack-cli wrapper-webpack-plugin
+
+ADD id_rsa $HOME/.ssh/id_rsa
+ADD id_rsa.pub $HOME/.ssh/id_rsa.pub
+ADD adbkey $HOME/.android/adbkey
+ADD adbkey.pub $HOME/.android/adbkey.pub
