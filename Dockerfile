@@ -17,7 +17,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV HOME "/root"
 
 RUN apk update && apk add --no-cache \
-    bash \
+#    bash \
 #    perl \
 #    curl \
 #    unzip \
@@ -32,7 +32,7 @@ RUN apk update && apk add --no-cache \
     g++ \
     make \
     cmake \
-    "ninja>1.9.0-r0" \
+#    "ninja>1.9.0-r0" \
 #    nodejs \
 #    nodejs-npm \
 #    python \
