@@ -18,24 +18,24 @@ ENV HOME "/root"
 
 RUN apk update && apk add --no-cache \
     bash \
-    perl \
-    curl \
-    unzip \
-    zip \
-    git \
+#    perl \
+#    curl \
+#    unzip \
+#    zip \
+#    git \
     ruby \
     ruby-dev \
     ruby-rdoc \
     ruby-irb \
-    openssh \
-    openssh-server \
+#    openssh \
+#    openssh-server \
     g++ \
     make \
     cmake \
-    ninja \
-    nodejs \
-    nodejs-npm \
-    python \
+    "ninja>1.9.0" \
+#    nodejs \
+#    nodejs-npm \
+#    python \
     && rm -rf /tmp/* /var/tmp/*
 
 ADD https://dl.google.com/android/repository/sdk-tools-linux-${VERSION_SDK_TOOLS}.zip /tools.zip
@@ -50,27 +50,27 @@ RUN ${ANDROID_HOME}/tools/bin/sdkmanager "tools" "build-tools;${VERSION_BUILD_TO
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;google_play_services" "extras;google;m2repository"
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle"
 
-RUN mkdir -p $HOME/lokalise && cd $HOME/lokalise
-RUN wget -O ./inst.tgz https://s3-eu-west-1.amazonaws.com/lokalise-assets/cli/lokalise-0.44-linux-amd64.tgz
-RUN tar -xvzf ./inst.tgz
-RUN mv ./lokalise /usr/local/bin/lokalise
+# RUN mkdir -p $HOME/lokalise && cd $HOME/lokalise
+# RUN wget -O ./inst.tgz https://s3-eu-west-1.amazonaws.com/lokalise-assets/cli/lokalise-0.44-linux-amd64.tgz
+# RUN tar -xvzf ./inst.tgz
+# RUN mv ./lokalise /usr/local/bin/lokalise
 
 RUN gem install fastlane
 RUN gem install dotenv
 RUN gem install json
 
 # Downloading gcloud package
-RUN curl https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > /tmp/google-cloud-sdk.tar.gz
+# RUN curl https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > /tmp/google-cloud-sdk.tar.gz
 
 # Installing the package
-RUN mkdir -p /usr/local/gcloud
-RUN tar -C /usr/local/gcloud -xvf /tmp/google-cloud-sdk.tar.gz
-RUN /usr/local/gcloud/google-cloud-sdk/install.sh --quiet
+# RUN mkdir -p /usr/local/gcloud
+# RUN tar -C /usr/local/gcloud -xvf /tmp/google-cloud-sdk.tar.gz
+# RUN /usr/local/gcloud/google-cloud-sdk/install.sh --quiet
 
 # Adding the package path to local
-ENV PATH $PATH:/usr/local/gcloud/google-cloud-sdk/bin
+# ENV PATH $PATH:/usr/local/gcloud/google-cloud-sdk/bin
 
-RUN npm install -g webpack webpack-cli wrapper-webpack-plugin
+# RUN npm install -g webpack webpack-cli wrapper-webpack-plugin
 
 #ADD id_rsa $HOME/.ssh/id_rsa
 #ADD id_rsa.pub $HOME/.ssh/id_rsa.pub
