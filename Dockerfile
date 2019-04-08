@@ -20,7 +20,7 @@ RUN apk update && apk add --no-cache \
 #    bash \
 #    perl \
 #    curl \
-#    unzip \
+     unzip \
 #    zip \
 #    git \
     ruby \
