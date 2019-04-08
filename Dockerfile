@@ -32,7 +32,7 @@ RUN apk update && apk add --no-cache \
     g++ \
     make \
     cmake \
-    "ninja>1.9.0" \
+    "ninja>1.9.0-r0" \
 #    nodejs \
 #    nodejs-npm \
 #    python \
