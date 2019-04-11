@@ -27,6 +27,7 @@ RUN apk update && apk add --no-cache \
     ruby-dev \
     ruby-rdoc \
     ruby-irb \
+    gcc musl-dev \
 #    openssh \
 #    openssh-server \
     g++ \
