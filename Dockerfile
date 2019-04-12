@@ -49,7 +49,7 @@ RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-${VERSION_TARG
 RUN mkdir -p $HOME/.android && touch $HOME/.android/repositories.cfg
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "tools" "build-tools;${VERSION_BUILD_TOOLS}"
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;google_play_services" "extras;google;m2repository"  && \
-	sdkmanager "cmake;3.10.2"
+	sdkmanager "cmake"
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle"
 
 # RUN mkdir -p $HOME/lokalise && cd $HOME/lokalise
