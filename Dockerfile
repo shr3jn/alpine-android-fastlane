@@ -25,8 +25,8 @@ RUN apk update && apk add --no-cache \
 #    git \
     ruby \
     ruby-dev \
-#    ruby-rdoc \
-#    ruby-irb \
+    ruby-rdoc \
+    ruby-irb \
 #    clang \
 #    openssh \
 #    openssh-server \
@@ -49,8 +49,7 @@ RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-${VERSION_TARG
 RUN mkdir -p $HOME/.android && touch $HOME/.android/repositories.cfg
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "tools" "build-tools;${VERSION_BUILD_TOOLS}"
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;google_play_services" "extras;google;m2repository"  && \
-	sdkmanager "cmake;3.10.2" && \
-	sdkmanager "lldb;3.1"
+	sdkmanager "cmake;3.10.2"
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle"
 
 # RUN mkdir -p $HOME/lokalise && cd $HOME/lokalise
