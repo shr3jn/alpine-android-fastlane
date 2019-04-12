@@ -25,12 +25,12 @@ RUN apk update && apk add --no-cache \
 #    git \
     ruby \
     ruby-dev \
-    ruby-rdoc \
-    ruby-irb \
+#    ruby-rdoc \
+#    ruby-irb \
 #    clang \
 #    openssh \
 #    openssh-server \
-     g++ \
+#     g++ \
      make \
 #    cmake \
 #    "ninja>1.9.0-r0" \
@@ -49,12 +49,9 @@ RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-${VERSION_TARG
 RUN mkdir -p $HOME/.android && touch $HOME/.android/repositories.cfg
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "tools" "build-tools;${VERSION_BUILD_TOOLS}"
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;google_play_services" "extras;google;m2repository"  && \
-	sdkmanager "cmake;3.6.4111459"
-RUN wget -q --output-document=android-ndk.zip https://dl.google.com/android/repository/android-ndk-r18b-linux-x86_64.zip && \
-	unzip android-ndk.zip && \
-	rm -f android-ndk.zip && \
-	mv android-ndk-r18b android-ndk-linux
-#RUN ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle"
+	sdkmanager "cmake;3.10.2" && \
+	sdkmanager "lldb;3.1"
+RUN ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle"
 
 # RUN mkdir -p $HOME/lokalise && cd $HOME/lokalise
 # RUN wget -O ./inst.tgz https://s3-eu-west-1.amazonaws.com/lokalise-assets/cli/lokalise-0.44-linux-amd64.tgz
