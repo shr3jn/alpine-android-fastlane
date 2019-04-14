@@ -10,6 +10,7 @@ ENV VERSION_BUILD_TOOLS "28.0.3"
 ENV VERSION_TARGET_SDK "28"
 
 ENV ANDROID_HOME "/sdk"
+ENV NDK_ROOT "/sdk/ndk-bundle"
 
 ENV PATH "$PATH:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools"
 ENV DEBIAN_FRONTEND noninteractive
@@ -48,9 +49,12 @@ RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-${VERSION_TARG
 
 RUN mkdir -p $HOME/.android && touch $HOME/.android/repositories.cfg
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "tools" "build-tools;${VERSION_BUILD_TOOLS}"
-RUN ${ANDROID_HOME}/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;google_play_services" "extras;google;m2repository"  && \
-	sdkmanager "cmake"
-RUN ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle"
+RUN ${ANDROID_HOME}/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;google_play_services" "extras;google;m2repository"
+RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager \
+        "cmake;3.6.4111459" \
+        "cmake;3.10.2.4988404" \
+        "ndk-bundle" >/dev/null
+#RUN ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle"
 
 # RUN mkdir -p $HOME/lokalise && cd $HOME/lokalise
 # RUN wget -O ./inst.tgz https://s3-eu-west-1.amazonaws.com/lokalise-assets/cli/lokalise-0.44-linux-amd64.tgz
