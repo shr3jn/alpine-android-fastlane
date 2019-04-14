@@ -31,7 +31,7 @@ RUN apk update && apk add --no-cache \
 #    clang \
 #    openssh \
 #    openssh-server \
-#     g++ \
+     g++ \
      make \
 #    cmake \
 #    "ninja>1.9.0-r0" \
