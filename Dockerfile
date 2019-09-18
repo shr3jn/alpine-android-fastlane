@@ -23,7 +23,7 @@ RUN apk update && apk add --no-cache \
 #    curl \
      unzip \
 #    zip \
-#    git \
+    git \
     ruby \
     ruby-dev \
     ruby-rdoc \
