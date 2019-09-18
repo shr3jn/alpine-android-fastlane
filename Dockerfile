@@ -31,7 +31,7 @@ RUN apk update && apk add --no-cache \
 #    clang \
 #    openssh \
 #    openssh-server \
-     openssh-client
+     openssh-client \
      g++ \
      make \
 #    cmake \
