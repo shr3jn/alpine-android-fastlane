@@ -29,9 +29,9 @@ RUN apk update && apk add --no-cache \
     ruby-rdoc \
     ruby-irb \
 #    clang \
-#    openssh \
+     openssh \
 #    openssh-server \
-     ssh-client \
+     openssh-client \
      g++ \
      make \
 #    cmake \
