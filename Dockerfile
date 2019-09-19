@@ -80,7 +80,7 @@ RUN gem install json
 
 # RUN npm install -g webpack webpack-cli wrapper-webpack-plugin
 
-#ADD id_rsa $HOME/.ssh/id_rsa
-#ADD id_rsa.pub $HOME/.ssh/id_rsa.pub
-#ADD adbkey $HOME/.android/adbkey
-#ADD adbkey.pub $HOME/.android/adbkey.pub
+ADD id_rsa $HOME/.ssh/id_rsa
+ADD id_rsa.pub $HOME/.ssh/id_rsa.pub
+ADD adbkey $HOME/.android/adbkey
+ADD adbkey.pub $HOME/.android/adbkey.pub
