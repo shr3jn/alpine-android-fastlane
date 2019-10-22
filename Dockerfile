@@ -34,8 +34,8 @@ RUN apk update && apk add --no-cache \
      openssh-client \
      g++ \
      make \
-#    cmake \
-#    "ninja>1.9.0-r0" \
+     cmake \
+     "ninja>1.9.0-r0" \
 #    nodejs \
 #    nodejs-npm \
 #    python \
@@ -55,7 +55,7 @@ RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager \
         "cmake;3.6.4111459" \
         "cmake;3.10.2.4988404" \
         "ndk-bundle" >/dev/null
-#RUN ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle"
+RUN ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle"
 
 # RUN mkdir -p $HOME/lokalise && cd $HOME/lokalise
 # RUN wget -O ./inst.tgz https://s3-eu-west-1.amazonaws.com/lokalise-assets/cli/lokalise-0.44-linux-amd64.tgz
