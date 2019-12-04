@@ -63,7 +63,7 @@ RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager \
 # RUN mv ./lokalise /usr/local/bin/lokalise
 
 #fastlane_update
-RUN gem install fastlane
+RUN gem install fastlane -NV
 RUN gem install dotenv
 RUN gem install json
 
