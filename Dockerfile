@@ -28,6 +28,7 @@ RUN apk update && apk add --no-cache \
     ruby-dev \
     ruby-rdoc \
     ruby-irb \
+    grep \
 #    clang \
      openssh \
 #    openssh-server \
