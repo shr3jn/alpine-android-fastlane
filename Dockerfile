@@ -22,7 +22,7 @@ RUN apk update && apk add --no-cache \
 #    perl \
      curl \
      unzip \
-#    zip \
+     zip \
     git \
     ruby \
     ruby-dev \
@@ -37,8 +37,8 @@ RUN apk update && apk add --no-cache \
      make \
 #    cmake \
 #    "ninja>1.9.0-r0" \
-#    nodejs \
-#    nodejs-npm \
+     nodejs \
+     nodejs-npm \
 #    python \
     && rm -rf /tmp/* /var/tmp/*
 
@@ -79,7 +79,7 @@ RUN gem install json
 # Adding the package path to local
 # ENV PATH $PATH:/usr/local/gcloud/google-cloud-sdk/bin
 
-# RUN npm install -g webpack webpack-cli wrapper-webpack-plugin
+RUN npm install -g plist
 
 # ADD id_rsa $HOME/.ssh/id_rsa
 # ADD id_rsa.pub $HOME/.ssh/id_rsa.pub
