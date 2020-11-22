@@ -39,6 +39,7 @@ RUN apk update && apk add --no-cache \
 #    "ninja>1.9.0-r0" \
      nodejs \
      nodejs-npm \
+     ruby-webrick \
 #    python \
     && rm -rf /tmp/* /var/tmp/*
 
@@ -90,3 +91,4 @@ RUN npm install -g plist
 # ADD adbkey $HOME/.android/adbkey
 # ADD adbkey.pub $HOME/.android/adbkey.pub
 ##
+
