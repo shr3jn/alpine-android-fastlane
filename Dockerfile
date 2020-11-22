@@ -64,12 +64,13 @@ RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager \
 # RUN mv ./lokalise /usr/local/bin/lokalise
 
 #fastlane_update
-RUN gem install fastlane -NV
+RUN gem install fastlane -NV #update fastlane
 RUN gem install dotenv
 RUN gem install json
 RUN gem install fastlane-plugin-huawei_appgallery_connect
 RUN gem install fastlane-plugin-firebase_app_distribution
 RUN gem install fastlane-plugin-appcenter
+RUN gem install fastlane-plugin-android_versioning
 
 # Downloading gcloud package
 # RUN curl https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > /tmp/google-cloud-sdk.tar.gz
