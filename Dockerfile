@@ -67,6 +67,9 @@ RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager \
 RUN gem install fastlane -NV
 RUN gem install dotenv
 RUN gem install json
+RUN gem install fastlane-plugin-huawei_appgallery_connect
+RUN gem install fastlane-plugin-firebase_app_distribution
+RUN gem install fastlane-plugin-appcenter
 
 # Downloading gcloud package
 # RUN curl https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > /tmp/google-cloud-sdk.tar.gz
