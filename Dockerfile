@@ -9,6 +9,10 @@ ENV VERSION_SDK_TOOLS "3859397"
 ENV VERSION_BUILD_TOOLS "28.0.3"
 ENV VERSION_TARGET_SDK "28"
 
+ENV VERSION_SDK_TOOLS_1 "6858069"
+ENV VERSION_BUILD_TOOLS_1 "30.0.2"
+ENV VERSION_TARGET_SDK_1 "30"
+
 ENV ANDROID_HOME "/sdk"
 ENV NDK_ROOT "/sdk/ndk-bundle"
 
@@ -44,14 +48,19 @@ RUN apk update && apk add --no-cache \
     && rm -rf /tmp/* /var/tmp/*
 
 ADD https://dl.google.com/android/repository/sdk-tools-linux-${VERSION_SDK_TOOLS}.zip /tools.zip
+ADD https://dl.google.com/android/repository/sdk-tools-linux-${VERSION_SDK_TOOLS_1}.zip /tools1.zip
 RUN unzip /tools.zip -d /sdk && \
     rm -v /tools.zip
+RUN unzip /tools1.zip -d /sdk && \
+    rm -v /tools1.zip
 
 RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager --licenses
 RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-${VERSION_TARGET_SDK}"
+RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-${VERSION_TARGET_SDK_1}"
 
 RUN mkdir -p $HOME/.android && touch $HOME/.android/repositories.cfg
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "tools" "build-tools;${VERSION_BUILD_TOOLS}"
+RUN ${ANDROID_HOME}/tools/bin/sdkmanager "tools" "build-tools;${VERSION_BUILD_TOOLS_1}"
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;google_play_services" "extras;google;m2repository"
 RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager \
         "cmake;3.6.4111459" \
