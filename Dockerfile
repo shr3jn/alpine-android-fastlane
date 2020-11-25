@@ -48,7 +48,7 @@ RUN apk update && apk add --no-cache \
     && rm -rf /tmp/* /var/tmp/*
 
 ADD https://dl.google.com/android/repository/sdk-tools-linux-${VERSION_SDK_TOOLS}.zip /tools.zip
-ADD https://dl.google.com/android/repository/sdk-tools-linux-${VERSION_SDK_TOOLS_1}.zip /tools1.zip
+ADD https://dl.google.com/android/repository/commandlinetools-linux-${VERSION_SDK_TOOLS_1}_latest.zip /tools1.zip
 RUN unzip /tools.zip -d /sdk && \
     rm -v /tools.zip
 RUN unzip /tools1.zip -d /sdk && \
