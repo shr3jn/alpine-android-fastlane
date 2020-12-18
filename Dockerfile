@@ -18,9 +18,13 @@ ENV NDK_ROOT "/sdk/ndk-bundle"
 
 ENV PATH "$PATH:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools"
 ENV DEBIAN_FRONTEND noninteractive
+ENV KOTLIN_VERSION=1.3.72
+ENV KOTLIN_HOME=/usr/share/kotlin
 
 ENV HOME "/root"
 
+RUN rm -rf /var/cache/apk/* && \
+    rm -rf /tmp/*
 RUN apk update && apk add --no-cache \
 #    bash \
 #    perl \
@@ -46,6 +50,16 @@ RUN apk update && apk add --no-cache \
      ruby-webrick \
 #    python \
     && rm -rf /tmp/* /var/tmp/*
+
+# install kotlin
+RUN cd /tmp && \
+    wget "https://github.com/JetBrains/kotlin/releases/download/v${KOTLIN_VERSION}/kotlin-compiler-${KOTLIN_VERSION}.zip" && \
+    unzip "kotlin-compiler-${KOTLIN_VERSION}.zip" && \
+    mkdir "${KOTLIN_HOME}" && \
+    # remove all windows files
+    rm "/tmp/kotlinc/bin/"*.bat && \
+    mv "/tmp/kotlinc/bin" "/tmp/kotlinc/lib" "${KOTLIN_HOME}" && \
+    ln -s "${KOTLIN_HOME}/bin/"* "/usr/bin/"
 
 ADD https://dl.google.com/android/repository/sdk-tools-linux-${VERSION_SDK_TOOLS}.zip /tools.zip
 ADD https://dl.google.com/android/repository/commandlinetools-linux-${VERSION_SDK_TOOLS_1}_latest.zip /tools1.zip
